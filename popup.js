@@ -1,28 +1,47 @@
-history_urls = {};
-history_visits = {};
-
+history_urls = {}; // url -> visits
+history_visits_to_urls = {}; // visit id -> url
+history_visits = {}; // visit objects by visit id
 urls_left = 0;
 
+function display_visit(visit, depth) {
+    depth = typeof(depth) !== "undefined" ? depth : 0;
+    if (depth > 5) {
+        return;
+    }
+
+    console.log(visit);
+    var url = history_visits_to_urls[visit.visitId];
+    console.log(url);
+    var visit_date = new Date(visit.visitTime);
+    var referrer_url = "unknown";
+    if (visit.referringVisitId !== 0) {
+        referrer_url = history_visits_to_urls[visit.referringVisitId];
+    }
+    var result = "";
+    for (var i = 0; i < depth; i++) {
+        result += "..";
+    }
+    result += "url " + url + " time " + visit_date.toLocaleString() + " visit " + visit.visitId + " referrer " + referrer_url + " transition " + visit.transition;
+    result += "<br />";
+    console.log(result);
+    document.body.innerHTML += result;
+    if (visit.referringVisitId) {
+        var referrer_visit = history_visits[visit.referringVisitId];
+        if (referrer_visit) {
+            return display_visit(referrer_visit, depth+1);
+        }
+        console.log("visit id " + visit.referringVisitId + " references no visit");
+    }
+}
+
 function display_visits(visits) {
+    document.body.innerHTML = "You have visited this url " + visits.length + " times<br />";
     if (visits.length === 0) {
         document.body.innerHTML = "No results";
     }
     console.log(urls_left);
     for (var i = visits.length-1; i >= 0; i--) {
-        var visit = visits[i];
-        console.log(visit);
-        var url = history_visits[visit.visitId];
-        console.log(url);
-        var visit_date = new Date(visit.visitTime);
-        var referrer = "unknown";
-        if (visit.referringVisitId) {
-            referrer = history_visits[visit.referringVisitId];
-        }
-
-        var result = "url " + url + " time " + visit_date.toLocaleString() + " visit " + visit.visitId + " referrer " + referrer + " transition " + visit.transition;
-        result += "<br />";
-        console.log(result);
-        document.body.innerHTML += result;
+        display_visit(visits[i]);
     }
 }
 
@@ -31,7 +50,9 @@ function set_history(url) {
 //        console.log("appending " + visits.length + " visits to " + url);
         history_urls[url].visits = visits;
         for (var i = 0; i < visits.length; i++) {
-            history_visits[visits[i].visitId] = url;
+            var visit = visits[i];
+            history_visits_to_urls[visit.visitId] = url;
+            history_visits[visit.visitId] = visit;
         }
         urls_left--;
     };

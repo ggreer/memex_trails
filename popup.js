@@ -27,11 +27,16 @@ function display_visit(visit, depth) {
         case "reload":
             result += " reload";
             break;
-        case "keyword":
+        case "typed":
+            result += " typed";
             break;
+        case "keyword":
+        case "generated":
+        case "keyword_generated":
+//            break;
         default:
-            result += " visit " + visit.visitId + " url <a href=\"" + url + "\">" + url + "</a>" +
-                " from " + "<a href=\"" + referrer_url + "\">" + referrer_url + "</a>" + " transition " + visit.transition;
+            result += " visit " + visit.visitId + " url <a href=\"" + url + "\"><img src=\"chrome://favicon/" + url + "\"/>" + url + "</a>" +
+                " from " + "<a href=\"" + referrer_url + "\"><img src=\"chrome://favicon/" + referrer_url + "\"/>" + referrer_url + "</a>" + " transition " + visit.transition;
             break;
     }
     result += "<br />";

@@ -9,6 +9,7 @@
   "permissions": [
     "tabs",
     "history",
-    "<all_urls>"
+    "<all_urls>",
+    "chrome://favicon/"
   ]
 }

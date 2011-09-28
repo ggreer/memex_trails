@@ -1,31 +1,8 @@
 <style>
 body {
-    min-width: 200px;
+    min-width: 500px;
     overflow-x: hidden;
 }
 </style>
 
-<script>
-function show_history(visits) {
-    if (visits.length > 0) {
-        document.body.innerHTML = "";
-    }
-    else {
-        document.body.innerHTML = "NOOOOOTHING";
-    }
-    for (var i=0; i<visits.length; i++) {
-        visit = visits[i];
-        console.log(visit);
-        var result = "visit " + visit.id + " referer " + visit.referringVisitId + " transition " + visit.transition;
-        document.body.innerHTML += result;
-    }
-}
-
-chrome.tabs.getSelected(null, function(tab) {
-    var details = new Object();
-    details.url = tab.url;//"http://wiki.puella-magi.net/";//window.location.href;
-    console.log("tab url: " + details.url);
-    chrome.history.getVisits(details, show_history);
-});
-
-</script>
+<script src="popup.js" />

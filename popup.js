@@ -5,7 +5,7 @@ urls_left = 0;
 
 function display_visit(visit, depth) {
     depth = typeof(depth) !== "undefined" ? depth : 0;
-    if (depth > 5) {
+    if (depth > 10) {
         return;
     }
 
@@ -14,14 +14,26 @@ function display_visit(visit, depth) {
     console.log(url);
     var visit_date = new Date(visit.visitTime);
     var referrer_url = "unknown";
-    if (visit.referringVisitId !== 0) {
+    if (visit.referringVisitId !== "0") { // chrome's history api likes to return ints as strings
         referrer_url = history_visits_to_urls[visit.referringVisitId];
     }
     var result = "";
     for (var i = 0; i < depth; i++) {
         result += "..";
     }
-    result += "url " + url + " time " + visit_date.toLocaleString() + " visit " + visit.visitId + " referrer " + referrer_url + " transition " + visit.transition;
+    result += " time " + visit_date.toLocaleString();
+    switch(visit.transition) {
+        // ignore refresh visits
+        case "reload":
+            result += " reload";
+            break;
+        case "keyword":
+            break;
+        default:
+            result += " visit " + visit.visitId + " url <a href=\"" + url + "\">" + url + "</a>" +
+                " from " + "<a href=\"" + referrer_url + "\">" + referrer_url + "</a>" + " transition " + visit.transition;
+            break;
+    }
     result += "<br />";
     console.log(result);
     document.body.innerHTML += result;
@@ -35,7 +47,7 @@ function display_visit(visit, depth) {
 }
 
 function display_visits(visits) {
-    document.body.innerHTML = "You have visited this url " + visits.length + " times<br />";
+    document.body.innerHTML = "You have visited this page " + visits.length + " times<br />";
     if (visits.length === 0) {
         document.body.innerHTML = "No results";
     }

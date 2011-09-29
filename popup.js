@@ -6,6 +6,7 @@ urls_left = 0;
 function display_visit(visit, depth) {
     depth = typeof(depth) !== "undefined" ? depth : 0;
     if (depth > 10) {
+        $("#history_container").append("Depth exceeded");
         return;
     }
 
@@ -17,38 +18,16 @@ function display_visit(visit, depth) {
     if (visit.referringVisitId !== "0") { // chrome's history api likes to return ints as strings
         referrer_url = history_visits_to_urls[visit.referringVisitId];
     }
-    var result = "";
-    for (var i = 0; i < depth; i++) {
-        result += "..";
-    }
-    result += " time " + visit_date.toLocaleString();
-    switch(visit.transition) {
-        // ignore refresh visits
-        case "reload":
-            result += " reload";
-            break;
-        case "typed":
-            result += " typed";
-            break;
-        case "keyword":
-        case "generated":
-        case "keyword_generated":
-//            break;
-        default:
-            result = {
-                visit: visit,
-                url: url,
-                referrer_url: referrer_url,
-                depth: depth
-            };
-            $("#history_template").tmpl(result).appendTo("#history_container");
-//            console.log(blah);
-//            $("#history_container").append(blah);
-            break;
-    }
-    result += "<br />";
-    console.log(result);
-//    document.body.innerHTML += result;
+    var result = {
+        visit: visit,
+        url: url,
+        referrer_url: referrer_url,
+        depth: depth,
+        visit_time: visit_date
+    };
+
+    $("#visit_template_default").tmpl(result).appendTo("#history_container");
+
     if (visit.referringVisitId) {
         var referrer_visit = history_visits[visit.referringVisitId];
         if (referrer_visit) {
@@ -59,14 +38,15 @@ function display_visit(visit, depth) {
 }
 
 function display_visits(visits) {
-    document.body.innerHTML += "You have visited this page " + visits.length + " times<br />";
+    $("#header").append("You have visited this page " + visits.length + " times<br />");
     if (visits.length === 0) {
-        document.body.innerHTML += "No results";
+        $("#history_container").append("No results");
     }
     console.log(urls_left);
     for (var i = visits.length-1; i >= 0; i--) {
         display_visit(visits[i]);
     }
+    $("#history_container").append("<hr />");
 }
 
 function set_history(url) {

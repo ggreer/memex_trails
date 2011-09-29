@@ -9,17 +9,34 @@ body {
 .history_container {
     background-color: #ccc;
 }
+
+div.visit > img.transition {
+    height: 24px;
+    width: 24px;
+}
 </style>
 
 <script type="text/javascript" src="jquery-1.6.4.js">
 </script>
 <script type="text/javascript" src="jquery.tmpl.js">
 </script>
-<script id="history_template" type="text/x-jquery-tmpl">
+<script id="visit_template_reload" type="text/x-jquery-tmpl">
+    <div class="visit" class="visit_refresh">
+        <img src="refresh.png"> Refresh
+        at ${visit_time.toLocaleString()}
+    </div>
+</script>
+<script id="visit_template_typed" type="text/x-jquery-tmpl">
+    <div class="visit" class="visit_typed">
+        <img src="typed.png"> Refresh
+        at ${visit_time.toLocaleString()}
+    </div>
+</script>
+<script id="visit_template_default" type="text/x-jquery-tmpl">
     <div class="visit">
-        visit ${visit.visitId} ${url}
-        <a href="${url}">
-        <img src="chrome://favicon/${url}">${url}</a>
+        <img class="transition" src="images/transition_${visit.transition}.png">
+        <a href="${url}"><img src="chrome://favicon/${url}">${title}<br/>${url}</a>
+        at ${visit_time.toLocaleString()} visit ${visit.visitId}
         from <a href="${referrer_url}">
         <img src="chrome://favicon/${referrer_url}">${referrer_url}</a> transition ${visit.transition}
     </div>
@@ -28,6 +45,8 @@ body {
 </script>
 </head>
 <body>
+    <div id="header">
+    </div>
     <div id="history_container">
     </div>
 </body>

@@ -45,7 +45,7 @@ div.visit > img.transition {
         <a href="${url}"><img src="chrome://favicon/${url}">${title}<br/>${url}</a>
         at ${visit_time.toLocaleString()} visit ${visit.visitId}
         from <a href="${referrer_url}">
-        <img src="chrome://favicon/${referrer_url}">${referrer_url}</a> transition ${visit.transition}
+        <img src="chrome://favicon/${referrer_url}">${referrer_url}</a> ${visit.transition}
     </div>
 </script>
 <script type="text/javascript" src="popup.js">

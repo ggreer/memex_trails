@@ -35,13 +35,20 @@ function display_visit(visit, depth) {
         case "keyword_generated":
 //            break;
         default:
-            result += " visit " + visit.visitId + " url <a href=\"" + url + "\"><img src=\"chrome://favicon/" + url + "\"/>" + url + "</a>" +
-                " from " + "<a href=\"" + referrer_url + "\"><img src=\"chrome://favicon/" + referrer_url + "\"/>" + referrer_url + "</a>" + " transition " + visit.transition;
+            result = {
+                visit: visit,
+                url: url,
+                referrer_url: referrer_url,
+                depth: depth
+            };
+            $("#history_template").tmpl(result).appendTo("#history_container");
+//            console.log(blah);
+//            $("#history_container").append(blah);
             break;
     }
     result += "<br />";
     console.log(result);
-    document.body.innerHTML += result;
+//    document.body.innerHTML += result;
     if (visit.referringVisitId) {
         var referrer_visit = history_visits[visit.referringVisitId];
         if (referrer_visit) {
@@ -52,9 +59,9 @@ function display_visit(visit, depth) {
 }
 
 function display_visits(visits) {
-    document.body.innerHTML = "You have visited this page " + visits.length + " times<br />";
+    document.body.innerHTML += "You have visited this page " + visits.length + " times<br />";
     if (visits.length === 0) {
-        document.body.innerHTML = "No results";
+        document.body.innerHTML += "No results";
     }
     console.log(urls_left);
     for (var i = visits.length-1; i >= 0; i--) {

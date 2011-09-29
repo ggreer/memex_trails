@@ -1,9 +1,34 @@
+<html>
+<head>
 <style>
 body {
     min-width: 500px;
     overflow-x: hidden;
 }
+
+.history_container {
+    background-color: #ccc;
+}
 </style>
 
-<script src="popup.js">
+<script type="text/javascript" src="jquery-1.6.4.js">
 </script>
+<script type="text/javascript" src="jquery.tmpl.js">
+</script>
+<script id="history_template" type="text/x-jquery-tmpl">
+    <div class="visit">
+        visit ${visit.visitId} ${url}
+        <a href="${url}">
+        <img src="chrome://favicon/${url}">${url}</a>
+        from <a href="${referrer_url}">
+        <img src="chrome://favicon/${referrer_url}">${referrer_url}</a> transition ${visit.transition}
+    </div>
+</script>
+<script type="text/javascript" src="popup.js">
+</script>
+</head>
+<body>
+    <div id="history_container">
+    </div>
+</body>
+</html>

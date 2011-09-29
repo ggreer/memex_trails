@@ -2,14 +2,20 @@
   "name": "Memex trails",
   "version": "0.1",
   "description": "Adds Vannevar Bush's trails to your browser.",
+  "homepage_url": "https://github.com/ggreer/memex_trails",
+
   "browser_action": {
     "default_icon": "icon.png",
     "popup": "popup.html"
   },
+  "icons": {
+      "48": "icon48.png",
+      "128": "icon128.png"
+  },
   "permissions": [
-    "tabs",
-    "history",
     "<all_urls>",
-    "chrome://favicon/"
+    "chrome://favicon/",
+    "history",
+    "tabs"
   ]
 }

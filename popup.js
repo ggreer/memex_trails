@@ -1,11 +1,12 @@
-history_urls = {}; // url -> visits
-history_visits_to_urls = {}; // visit id -> url
-history_visits = {}; // visit objects by visit id
-urls_left = 0;
+var history_urls = {}; // url -> visits
+var history_visits_to_urls = {}; // visit id -> url
+var history_visits = {}; // visit objects by visit id
+var urls_left = 0;
+var max_depth = 15;
 
 function display_visit(visit, depth) {
     depth = typeof(depth) !== "undefined" ? depth : 0;
-    if (depth > 10) {
+    if (depth > max_depth) {
         $("#history_container").append("Depth exceeded");
         return;
     }

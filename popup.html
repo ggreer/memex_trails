@@ -40,13 +40,18 @@ div.visit > img.transition {
     </div>
 </script>
 <script id="visit_template_default" type="text/x-jquery-tmpl">
-    <div class="visit" style="margin-left: ${depth * 15}px;">
+    <div id="visit_${visit.visitId}" class="visit" style="margin-left: ${depth * 15}px;">
         <img class="transition" src="images/transition_${visit.transition}.png">
         <a href="${url}"><img src="chrome://favicon/${url}">${title}<br/>${url}</a>
         at ${visit_time.toLocaleString()} visit ${visit.visitId}
         from <a href="${referrer_url}">
         <img src="chrome://favicon/${referrer_url}">${referrer_url}</a> ${visit.transition}
     </div>
+</script>
+<script type="text/javascript" src="graph/raphael-min.js"> </script>
+<script type="text/javascript" src="graph/dracula_graffle.js"> </script>
+<script type="text/javascript" src="graph/dracula_graph.js"> </script>
+<script type="text/javascript" src="draw.js">
 </script>
 <script type="text/javascript" src="popup.js">
 </script>
@@ -56,5 +61,6 @@ div.visit > img.transition {
     </div>
     <div id="history_container">
     </div>
+    <div id="canvas"></div>
 </body>
 </html>

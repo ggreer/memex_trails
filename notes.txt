@@ -1,0 +1,7 @@
+visualization: timeline-centric or link-graph-centric?
+
+both?
+link-centric is hard
+
+timeline first, then screw around with graph view
+

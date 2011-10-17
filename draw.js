@@ -1,6 +1,4 @@
 // Utils for drawing lines and graphs and stuff
-var g = new Graph();
-
 function draw_line(visit_id, referrer_id) {
     visit_div = $("#visit_" + visit_id);
     referrer_div = $("#visit_" + referrer_id);

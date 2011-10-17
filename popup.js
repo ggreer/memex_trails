@@ -25,12 +25,13 @@ function display_visit(visit, depth, parent) {
     var result = {
         visit: visit,
         url: url,
+        referrer_visit: visit.referringVisitId,
         referrer_url: referrer_url,
         depth: depth,
         visit_time: visit_date
     };
 
-    visit_div = $("#visit_" + visit.visitId);
+    var visit_div = $("#visit_" + visit.visitId);
     if (visit_div.length === 0) {
         $("#visit_template_default").tmpl(result).appendTo("#history_container");
     }
@@ -43,7 +44,7 @@ function display_visit(visit, depth, parent) {
         var referrer_visit = history_visits[visit.referringVisitId];
         if (referrer_visit) {
             display_visit(referrer_visit, depth+1, visit);
-            draw_line(visit.visitId, visit.referringVisitId);
+//            draw_line(visit.visitId, visit.referringVisitId);
         }
         else {
             console.log("visit id " + visit.referringVisitId + " references no visit");
@@ -60,10 +61,12 @@ function display_visits(visits) {
         display_visit(visits[i]);
     }
     $("#history_container").append("<hr />");
+/*
     var layouter = new Graph.Layout.Spring(g);
     layouter.layout();
     var renderer = new Graph.Renderer.Raphael('canvas', g, 500, 1000);
     renderer.draw();
+*/
 }
 
 function set_history(url) {
@@ -99,5 +102,5 @@ function get_history_since(time) {
 }
 
 var now = new Date();
-var last_month = now.getTime() - (1000 * 60 * 60 * 24 * 30);
+var last_month = now.getTime() - (1000 * 60 * 60 * 24 * 30); // 30 days
 get_history_since(last_month);

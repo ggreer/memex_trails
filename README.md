@@ -9,4 +9,3 @@ This extension becomes more useful over time. The more trails there are, the mor
 
 What about links from IM clients, IRC, etc?  
 Yeah it's hard to keep track of those with a browser extension. Unless Chrome adds a referring application to chrome.history, I'm not going to support it.
-

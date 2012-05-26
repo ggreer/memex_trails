@@ -1,3 +1,7 @@
+# Memex Trails
+
+### Development status: Not even close to working. Don't waste your time on this.
+
 > Arthur: The subject's mind can always trace the genesis of the idea. True inspiration is impossible to fake.  
 > Cobb: That's not true.
 

@@ -1,3 +1,5 @@
+### Development status: Not at all ready. Don't even try to use this.
+
 > Arthur: The subject's mind can always trace the genesis of the idea. True inspiration is impossible to fake.  
 > Cobb: That's not true.
 
